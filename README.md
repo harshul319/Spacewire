@@ -91,10 +91,3 @@
 - Maintains modular and scalable architecture.
 
 ---
-
-## Transmission Behavior
-
-For a DATA character:
-
-1. Scheduler selects `DATA`.
-2. Character Builder constructs:
