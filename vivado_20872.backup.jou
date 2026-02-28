@@ -1,0 +1,44 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Thu Feb 19 04:42:11 2026
+# Process ID         : 20872
+# Current directory  : C:/Users/HP/Spacewire
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent26992 C:\Users\HP\Spacewire\Spacewire.xpr
+# Log file           : C:/Users/HP/Spacewire/vivado.log
+# Journal file       : C:/Users/HP/Spacewire\vivado.jou
+# Running On         : DESKTOP-LSPH338
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     
+# CPU Frequency      : 3793 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 16415 MB
+# Swap memory        : 12348 MB
+# Total Virtual      : 28763 MB
+# Available Virtual  : 6060 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/HP/Spacewire/Spacewire.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+source tb_bit_en.tcl
+run 200ns
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_top_enc [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top top_enc [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+update_compile_order -fileset sources_1
+launch_simulation
+close_sim
