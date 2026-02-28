@@ -1,0 +1,16 @@
+# Vivado generated directories
+.Xil/
+*.cache/
+*.hw/
+*.sim/
+*.runs/
+*.ip_user_files/
+
+# Vivado logs & backups
+*.jou
+*.log
+*.backup
+*.backup.jou
+
+# Reports
+*.rpt
