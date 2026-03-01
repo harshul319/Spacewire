@@ -42,11 +42,7 @@
 **Purpose:** Character sequencing logic (sequential FSM)
 
 **Functionality:**
-- Decides which character to transmit.
-- Ensures serializer loads only when not busy.
-- Handles composite sequences (e.g., `ESC + DATA` for Broadcast Code).
-- Keeps protocol control separate from formatting logic.
-
+- ** Will start working on it**
 ---
 
 ### 4. `Serializer.v`
