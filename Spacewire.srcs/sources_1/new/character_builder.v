@@ -22,11 +22,12 @@
 
 module character_builder (
 
+    input wire clk,
     input  wire [2:0]  char_type,
     input  wire [7:0]  data_byte,   
 
-    output reg  [9:0] word,
-    output reg  [3:0]  length
+    output reg  [9:0] word_reg,
+    output reg  [3:0] length_reg
 );
 
     // ------------------------------------------
@@ -37,69 +38,58 @@ module character_builder (
     localparam EOP  = 3'd2;
     localparam EEP  = 3'd3;
     localparam ESC  = 3'd4;
-    
+
+    reg [9:0] word_next;
+    reg [3:0] length_next;
     reg parity;
 
+    // -------------------------------
+    // COMBINATIONAL LOGIC
+    // -------------------------------
     always @(*) begin
-
-        // Default values
-        word   = 14'd0;
-        length = 4'd0;
+        word_next   = 10'd0;
+        length_next = 4'd0;
 
         case (char_type)
 
-            // ----------------------------------
-            // DATA (N-Char)
-            // ----------------------------------
             DATA: begin
-                // Parity over data + control bit (0)
-                parity = ^{1'b0, data_byte};
-
-                word   = {data_byte, 1'b0, parity};
-                length = 4'd10;
+                parity = ~(^{1'b0, data_byte});
+                word_next   = {data_byte, 1'b0, parity};
+                length_next = 4'd10;
             end
 
-            // ----------------------------------
-            // FCT (L-Char)
-            // ----------------------------------
             FCT: begin
-                parity = ^3'b001;
-                word   = {3'b001,parity};
-                length = 4'd4;
+                parity = ~(^3'b001);
+                word_next   = {3'b001, parity};
+                length_next = 4'd4;
             end
 
-            // ----------------------------------
-            // EOP
-            // ----------------------------------
             EOP: begin
-                parity = ^3'b101;
-                word   = {3'b101,parity};
-                length = 4'd4;
+                parity = ~(^3'b101);
+                word_next   = {3'b101, parity};
+                length_next = 4'd4;
             end
 
-            // ----------------------------------
-            // EEP
-            // ----------------------------------
             EEP: begin
-                parity = ^3'b011;
-                word   = {3'b011,parity};
-                length = 4'd4;
+                parity = ~(^3'b011);
+                word_next   = {3'b011, parity};
+                length_next = 4'd4;
             end
 
-            // ----------------------------------
-            // ESC
-            // ----------------------------------
             ESC: begin
-                parity = ^3'b111;
-                word   = {3'b111,parity};
-                length = 4'd4;
-            end
-
-            default: begin
-                word   = 14'd0;
-                length = 4'd0;
+                parity = ~(^3'b111);
+                word_next   = {3'b111, parity};
+                length_next = 4'd4;
             end
         endcase
+    end
+
+    // -------------------------------
+    // REGISTERED OUTPUT 
+    // -------------------------------
+    always @(posedge clk) begin
+        word_reg   <= word_next;
+        length_reg <= length_next;
     end
 
 endmodule

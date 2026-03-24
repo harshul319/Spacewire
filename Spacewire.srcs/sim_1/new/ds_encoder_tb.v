@@ -5,7 +5,7 @@ module tb_ds_encoder;
     // DUT inputs
     reg clk;
     reg rst;
-    reg busy;
+    reg serial_busy;
     reg bit_in;
 
     // DUT outputs
@@ -29,7 +29,7 @@ module tb_ds_encoder;
     task send_bit(input reg b);
         begin
             bit_in = b;
-            busy   = 1'b1;
+            serial_busy   = 1'b1;
             #10;                 // one clock cycle
         end
     endtask
@@ -38,7 +38,7 @@ module tb_ds_encoder;
         // Initial values
         clk    = 0;
         rst    = 1;
-        busy   = 0;
+        serial_busy   = 0;
         bit_in = 0;
 
         // Reset pulse
@@ -65,7 +65,7 @@ module tb_ds_encoder;
         send_bit(0);
 
         // Idle (busy low)
-        busy = 0;
+        serial_busy = 0;
         #20;
 
         // Resume transmission

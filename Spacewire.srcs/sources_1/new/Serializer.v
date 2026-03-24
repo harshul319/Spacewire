@@ -25,11 +25,11 @@ module serializer (
     input  wire        bit_en,
     input  wire        rst,
     input  wire        load,
-    input  wire [9:0] word,
-    input  wire [3:0]  length,
+    input  wire [9:0] word_reg,
+    input  wire [3:0]  length_reg,
 
     output reg         bit_out,
-    output reg         busy
+    output reg         serial_busy
 );
 
     reg [9:0] shift_reg;
@@ -38,28 +38,28 @@ module serializer (
 
     always @(posedge clk) begin
         if (rst) begin
-            shift_reg <= 9'd0;
+            shift_reg <= 10'd0;
             bit_cnt   <= 4'd0;
             len_reg   <= 4'd0;
             bit_out   <= 1'b0;
-            busy      <= 1'b0;
+            serial_busy      <= 1'b0;
         end
         else begin
             // LOAD PHASE
-            if (load && !busy) begin
-                shift_reg <= word;     
-                len_reg   <= length;   // latch length
+            if (load && !serial_busy) begin
+                shift_reg <= word_reg;     
+                len_reg   <= length_reg;   // latch length
                 bit_cnt   <= 4'd0;
-                busy      <= 1'b1;
+                serial_busy      <= 1'b1;
             end
 
             // SHIFT PHASE
-            else if (busy && bit_en) begin
+            else if (serial_busy && bit_en) begin
                 bit_out   <= shift_reg[0];
                 shift_reg <= shift_reg >> 1;
 
                 if (bit_cnt == len_reg - 1) begin
-                    busy    <= 1'b0;   // last bit sent
+                    serial_busy    <= 1'b0;   // last bit sent
                 end
 
                 bit_cnt <= bit_cnt + 1'b1;

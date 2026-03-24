@@ -5,11 +5,11 @@ module tb_serializer;
     reg         clk;
     reg         rst;
     reg         load;
-    reg [13:0]  word;
+    reg [9:0]  word;
     reg [3:0]   length;
 
     wire        bit_out;
-    wire        busy;
+    wire        serial_busy;
 
     // DUT
     serializer dut (
@@ -19,7 +19,7 @@ module tb_serializer;
         .word(word),
         .length(length),
         .bit_out(bit_out),
-        .busy(busy)
+        .serial_busy(serial_busy)
     );
 
     // Clock: 10 ns period
@@ -40,42 +40,42 @@ module tb_serializer;
         // TEST 1: 4-bit control character
         // ----------------------------------
         @(posedge clk);
-        word   = 14'b0000_0000_0001_101; // lower 4 bits = 1101
+        word   = 10'b0000_0001_101; // lower 4 bits = 1101
         length = 4;
         load   = 1;
 
         @(posedge clk);
         load = 0;
 
-        wait (!busy);
+        wait (!serial_busy);
         #20;
 
         // ----------------------------------
         // TEST 2: 10-bit data character
         // ----------------------------------
         @(posedge clk);
-        word   = 14'b0000_11_10101010; // lower 10 bits valid
+        word   = 10'b0000_1010_11; // lower 10 bits valid
         length = 10;
         load   = 1;
 
         @(posedge clk);
         load = 0;
 
-        wait (!busy);
+        wait (!serial_busy);
         #20;
 
         // ----------------------------------
-        // TEST 3: 14-bit time code
+        // TEST 3: 10-bit data character
         // ----------------------------------
         @(posedge clk);
-        word   = 14'b11_101011_01111_0; // example 14-bit pattern
-        length = 14;
+        word   = 10'b1100_1010_01; // example 14-bit pattern
+        length = 10;
         load   = 1;
 
         @(posedge clk);
         load = 0;
 
-        wait (!busy);
+        wait (!serial_busy);
         #50;
 
         $finish;

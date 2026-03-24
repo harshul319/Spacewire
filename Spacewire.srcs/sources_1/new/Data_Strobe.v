@@ -25,7 +25,7 @@ module ds_encoder (
     input  wire rst,
     input  wire bit_en,
 
-    input  wire busy,
+    input  wire serial_busy,
     input  wire bit_in,
 
     output reg  DATA,
