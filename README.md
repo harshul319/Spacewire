@@ -124,6 +124,8 @@
 - `FCT_pending` is decremented **exactly once per transmitted FCT**, aligned with state transition
 - Designed to comply with **SpaceWire timing and ordering requirements**
 
+---
+
 ### 4. `Serializer.v`
 
 **Purpose:** Parallel-to-Serial converter
