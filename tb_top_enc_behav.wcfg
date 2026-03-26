@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_top_enc_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_top_enc" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="2,845.001 ns"></ZoomEndTime>
+      <Cursor1Time time="3,190.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="132"></NameColumnWidth>
+      <ValueColumnWidth column_width="127"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/tb_top_enc/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/SEND_FCT" type="logic">
+      <obj_property name="ElementShortName">SEND_FCT</obj_property>
+      <obj_property name="ObjectShortName">SEND_FCT</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/SEND_BC" type="logic">
+      <obj_property name="ElementShortName">SEND_BC</obj_property>
+      <obj_property name="ObjectShortName">SEND_BC</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/fifo_data" type="array">
+      <obj_property name="ElementShortName">fifo_data[8:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_data[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/broadcast_code" type="array">
+      <obj_property name="ElementShortName">broadcast_code[7:0]</obj_property>
+      <obj_property name="ObjectShortName">broadcast_code[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/fifo_empty" type="logic">
+      <obj_property name="ElementShortName">fifo_empty</obj_property>
+      <obj_property name="ObjectShortName">fifo_empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/DATA" type="logic">
+      <obj_property name="ElementShortName">DATA</obj_property>
+      <obj_property name="ObjectShortName">DATA</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/STROBE" type="logic">
+      <obj_property name="ElementShortName">STROBE</obj_property>
+      <obj_property name="ObjectShortName">STROBE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/serial_busy" type="logic">
+      <obj_property name="ElementShortName">serial_busy</obj_property>
+      <obj_property name="ObjectShortName">serial_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/char_type" type="array">
+      <obj_property name="ElementShortName">char_type[2:0]</obj_property>
+      <obj_property name="ObjectShortName">char_type[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/data_byte" type="array">
+      <obj_property name="ElementShortName">data_byte[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_byte[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_serializer/word_reg" type="array">
+      <obj_property name="ElementShortName">word_reg[9:0]</obj_property>
+      <obj_property name="ObjectShortName">word_reg[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/state_req" type="logic">
+      <obj_property name="ElementShortName">state_req</obj_property>
+      <obj_property name="ObjectShortName">state_req</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/load" type="logic">
+      <obj_property name="ElementShortName">load</obj_property>
+      <obj_property name="ObjectShortName">load</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/BC_pending" type="logic">
+      <obj_property name="ElementShortName">BC_pending</obj_property>
+      <obj_property name="ObjectShortName">BC_pending</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/FCT_pending" type="array">
+      <obj_property name="ElementShortName">FCT_pending[7:0]</obj_property>
+      <obj_property name="ObjectShortName">FCT_pending[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+</wave_config>

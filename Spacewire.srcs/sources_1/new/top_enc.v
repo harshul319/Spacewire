@@ -32,7 +32,9 @@ module top_enc (
 
     wire [9:0] word_reg;
     wire [3:0] length_reg;
-
+    wire [7:0] FCT_pending;
+    
+    wire FCT_sent;
     wire serial_bit;
     wire token;
 
@@ -66,19 +68,21 @@ module top_enc (
         .broadcast_code (broadcast_code),
         .fifo_data      (fifo_data),
         .fifo_empty     (fifo_empty),
+        .FCT_pending    (FCT_pending),
 
         .load           (load),
         .char_type      (char_type),
         .data_byte      (data_byte),
 
         .data_sent      (data_sent),
+        .FCT_sent       (FCT_sent),
         .read_en        (read_en)
     );
 
     // ---------------------------------------
-    // Flow Control
+    // Flow Control Tokens available
     // ---------------------------------------
-    flow_control u_flow_control (
+    Flow_Control_Rx u_flow_control_rx (
         .clk        (clk),
         .rst        (rst),
         .token      (token),
@@ -87,10 +91,22 @@ module top_enc (
     );
 
     // ---------------------------------------
+    // Flow Control To Be Send
+    // ---------------------------------------
+    Flow_Control_Tx u_flow_control_tx (
+        .clk        (clk),
+        .rst        (rst),
+        .SEND_FCT      (SEND_FCT),
+        .FCT_sent  (FCT_sent),
+        .FCT_pending (FCT_pending)
+    );
+
+    // ---------------------------------------
     // Character Builder
     // ---------------------------------------
     character_builder u_character_builder (
         .clk        (clk),
+        .rst          (rst),        
         .char_type  (char_type),
         .data_byte  (data_byte),
         .word_reg       (word_reg),
@@ -117,7 +133,6 @@ module top_enc (
     ds_encoder u_ds_encoder (
         .clk          (clk),
         .rst          (rst),
-        .serial_busy  (serial_busy),
         .bit_in       (serial_bit),
         .DATA         (DATA),
         .STROBE       (STROBE),

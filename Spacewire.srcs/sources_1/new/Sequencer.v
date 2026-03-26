@@ -10,12 +10,14 @@ module Sequencer(
     input [8:0] fifo_data,
     input [7:0] broadcast_code,
     input fifo_empty,
+    input [7:0] FCT_pending,
 
     output reg load,
     output reg [2:0] char_type,
     output reg [7:0] data_byte,
     output reg data_sent,
-    output reg read_en
+    output reg read_en,
+    output reg FCT_sent
 );
 
     // ---------------------------------------
@@ -43,30 +45,22 @@ module Sequencer(
     // ---------------------------------------
     // Internal registers
     // ---------------------------------------
-    reg [7:0] FCT_pending;
     reg       BC_pending;
     reg       eop_pending;
     reg       state_req;
+    reg       FCT_sent_next;
 
 
     // ---------------------------------------
-    // Pending accumulation
+    // Pending BC accumulation
     // ---------------------------------------
     always @(posedge clk) begin
-        if (rst) begin
-            FCT_pending <= 0;
+        if (rst) 
             BC_pending  <= 0;
-        end else begin
-            if (SEND_FCT) 
-                FCT_pending <= FCT_pending + 1;
-                
-            else if ((!serial_busy) & load & (char_type==FCT))
-                FCT_pending <= 0;
-                
-            if (SEND_BC)
+        
+        else if (SEND_BC)
                 BC_pending <= 1;
         end
-    end
 
     // ---------------------------------------
     // MAIN FSM 
@@ -182,14 +176,19 @@ module Sequencer(
     // ---------------------------------------
     always @(posedge clk) begin 
         if(rst) begin
-            char_type <= 1'b0;
+            char_type <= ESC;
             data_byte <= 1'b0;
             data_sent <= 1'b0;
+            FCT_sent <= 1'b0;
+            FCT_sent_next <= 1'b0;         
             read_en   <= 1'b0;
             state_req <= 1'b0;
+            eop_pending <= 1'b0;
         end
         else begin
             data_sent <= 1'b0;
+            FCT_sent <= 1'b0;
+            FCT_sent_next <= 1'b0;
             read_en <= 1'b0;
             load <= 1'b0;
 
@@ -213,6 +212,7 @@ module Sequencer(
                     S_DATA: begin
                         char_type <= DATA;
                         data_byte <= fifo_data[7:0];
+                        eop_pending <= fifo_data[8];
                         data_sent <= 1'b1;
                         read_en   <= 1'b1;
                     end
@@ -220,11 +220,14 @@ module Sequencer(
                 // -------------------------
                     S_EOP: begin
                         char_type <= EOP;
+                        eop_pending <= 1'b0;
                     end
 
                 // -------------------------
                    S_FCT: begin
                        char_type <= FCT;
+                        FCT_sent_next <= 1'b1;
+                        FCT_sent <= FCT_sent_next;                    
                    end
 
                 // -------------------------

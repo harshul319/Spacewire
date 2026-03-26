@@ -5,7 +5,7 @@
 // 
 // Create Date: 15.03.2026 15:20:27
 // Design Name: 
-// Module Name: Flow_Control
+// Module Name: Flow_Control_Rx
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module flow_control(
+module Flow_Control_Rx(
     input clk,
     input rst,
     input token,       // received FCT
