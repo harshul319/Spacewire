@@ -53,7 +53,6 @@
   - `read_en` (FIFO read pulse)
   - `data_sent` (data acknowledgment pulse)
 
---
 
 **Core Responsibilities:**
 
@@ -64,14 +63,12 @@
   - Data (N-Character)  
   - NULL (ESC + FCT)
 
----
 
 - **Pending Request Handling:**
   - Accumulates multiple FCT requests (`FCT_pending`)
   - Handles broadcast requests (`BC_pending`)
   - Tracks end-of-packet condition (`eop_pending`)
 
----
 
 - **Event-Driven FSM Execution:**
   - State transitions occur **once per transmission slot**
@@ -81,7 +78,6 @@
     - skipping of states
     - unintended multiple decrements (e.g., `FCT_pending`)
 
----
 
 - **Serializer Synchronization:**
   - Asserts `load` **only when `serial_busy = 0`**
@@ -89,20 +85,17 @@
     - stable inputs to serializer
     - no mid-transmission overwrites
 
----
 
 - **FIFO Interface:**
   - Asserts `read_en` for **one clock cycle** when transmitting DATA
   - Uses `fifo_data[8]` to detect EOP condition
 
----
 
 - **Output Control:**
   - Outputs are **state-driven**
-  - Pulse signals (`read_en`, `data_sent`) are generated using:
+  - Pulse signals (`read_en`, `data_sent`, `FCT_sent`) are generated using:
     - default-zero + conditional-one approach
 
----
 
 **Key Design Characteristics:**
 
@@ -116,7 +109,6 @@
   - multi-cycle side effects
   - race conditions between control and data path
 
----
 
 **Notes:**
 - Broadcast Code (BC) is transmitted as:
@@ -156,6 +148,33 @@
 - Updates only when serializer is `busy` and `bit_en` is active.
 
 ---
+
+### 6. `Flow_Control_Tx.v`
+
+**Purpose:** Flow Control Token (FCT) generation for transmitter
+
+**Functionality:**
+- Generates FCTs based on receiver credit availability.
+- Ensures compliance with SpaceWire flow control rules.
+- Sends FCT after receiving sufficient room from the receiver.
+- Prevents data transmission when credit is exhausted.
+- Interfaces with sequencer to insert FCT characters into stream.
+- Handles:
+  - FCT request generation
+  - FCT transmission acknowledgment
+  - Credit counter management
+
+
+---
+
+### 7. `Flow_Control_Rx.v`
+
+**Purpose:** Flow Control Token (FCT) handling for receiver
+
+**Functionality:**
+- Updates receive-side credit counter.
+- Generates signals indicating when transmitter can send more data.
+- Ensures no buffer overflow by controlling credit return rate.
 
 ### 6. `top_enc.v`
 
