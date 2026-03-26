@@ -53,7 +53,7 @@
   - `read_en` (FIFO read pulse)
   - `data_sent` (data acknowledgment pulse)
 
----
+--
 
 **Core Responsibilities:**
 
