@@ -16,7 +16,7 @@ module Sequencer(
     output reg [2:0] char_type,
     output reg [7:0] data_byte,
     output reg data_sent,
-    output reg read_en,
+    output reg rd_en,
     output reg FCT_sent
 );
 
@@ -48,6 +48,7 @@ module Sequencer(
     reg       BC_pending;
     reg       eop_pending;
     reg       state_req;
+    reg       data_sent_next;
     reg       FCT_sent_next;
 
 
@@ -180,8 +181,9 @@ module Sequencer(
             data_byte <= 1'b0;
             data_sent <= 1'b0;
             FCT_sent <= 1'b0;
-            FCT_sent_next <= 1'b0;         
-            read_en   <= 1'b0;
+            FCT_sent_next <= 1'b0;
+            data_sent_next <= 1'b0;        
+            rd_en   <= 1'b0;
             state_req <= 1'b0;
             eop_pending <= 1'b0;
         end
@@ -189,7 +191,8 @@ module Sequencer(
             data_sent <= 1'b0;
             FCT_sent <= 1'b0;
             FCT_sent_next <= 1'b0;
-            read_en <= 1'b0;
+            data_sent_next <= 1'b0;
+            rd_en <= 1'b0;
             load <= 1'b0;
 
             if (!serial_busy) begin
@@ -213,8 +216,9 @@ module Sequencer(
                         char_type <= DATA;
                         data_byte <= fifo_data[7:0];
                         eop_pending <= fifo_data[8];
-                        data_sent <= 1'b1;
-                        read_en   <= 1'b1;
+                        data_sent_next <= 1'b1;
+                        data_sent <= data_sent_next;
+                        rd_en   <= data_sent_next;
                     end
 
                 // -------------------------

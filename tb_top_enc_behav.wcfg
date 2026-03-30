@@ -12,12 +12,12 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="2,845.001 ns"></ZoomEndTime>
-      <Cursor1Time time="3,190.000 ns"></Cursor1Time>
+      <ZoomEndTime time="2,870.001 ns"></ZoomEndTime>
+      <Cursor1Time time="1,145.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="132"></NameColumnWidth>
-      <ValueColumnWidth column_width="127"></ValueColumnWidth>
+      <ValueColumnWidth column_width="122"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="18" />
    <wvobject fp_name="/tb_top_enc/clk" type="logic">
@@ -36,17 +36,9 @@
       <obj_property name="ElementShortName">SEND_BC</obj_property>
       <obj_property name="ObjectShortName">SEND_BC</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top_enc/fifo_data" type="array">
-      <obj_property name="ElementShortName">fifo_data[8:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_data[8:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb_top_enc/broadcast_code" type="array">
       <obj_property name="ElementShortName">broadcast_code[7:0]</obj_property>
       <obj_property name="ObjectShortName">broadcast_code[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top_enc/fifo_empty" type="logic">
-      <obj_property name="ElementShortName">fifo_empty</obj_property>
-      <obj_property name="ObjectShortName">fifo_empty</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_top_enc/DATA" type="logic">
       <obj_property name="ElementShortName">DATA</obj_property>
@@ -55,10 +47,6 @@
    <wvobject fp_name="/tb_top_enc/STROBE" type="logic">
       <obj_property name="ElementShortName">STROBE</obj_property>
       <obj_property name="ObjectShortName">STROBE</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top_enc/serial_busy" type="logic">
-      <obj_property name="ElementShortName">serial_busy</obj_property>
-      <obj_property name="ObjectShortName">serial_busy</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/char_type" type="array">
       <obj_property name="ElementShortName">char_type[2:0]</obj_property>
@@ -91,5 +79,17 @@
    <wvobject fp_name="/tb_top_enc/dut/u_Sequencer/state" type="array">
       <obj_property name="ElementShortName">state[2:0]</obj_property>
       <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_fifo/empty" type="logic">
+      <obj_property name="ElementShortName">empty</obj_property>
+      <obj_property name="ObjectShortName">empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_fifo/rd_en" type="logic">
+      <obj_property name="ElementShortName">rd_en</obj_property>
+      <obj_property name="ObjectShortName">rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_enc/dut/u_fifo/wr_en" type="logic">
+      <obj_property name="ElementShortName">wr_en</obj_property>
+      <obj_property name="ObjectShortName">wr_en</obj_property>
    </wvobject>
 </wave_config>
