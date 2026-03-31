@@ -22,8 +22,6 @@
 
 module character_builder (
 
-    input wire clk,
-    input wire rst,
     input  wire [2:0]  char_type,
     input  wire [7:0]  data_byte,   
 

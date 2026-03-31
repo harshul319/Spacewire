@@ -7,7 +7,7 @@ module top_enc (
     input  wire        SEND_FCT,
     input  wire        SEND_BC,
 
-    input  wire [8:0]  TDATA,
+    input  wire [7:0]  TDATA,
     input  wire        TVALID, 
     input  wire        TLAST,
     input  wire [7:0]  broadcast_code,
@@ -95,7 +95,6 @@ module top_enc (
         .rst            (rst),
         .serial_busy    (serial_busy),
 
-        .SEND_FCT       (SEND_FCT),
         .SEND_BC        (SEND_BC),
 
         .tx_allowed     (tx_allowed),
@@ -139,9 +138,7 @@ module top_enc (
     // ---------------------------------------
     // Character Builder
     // ---------------------------------------
-    character_builder u_character_builder (
-        .clk        (clk),
-        .rst        (rst),        
+    character_builder u_character_builder (   
         .char_type  (char_type),
         .data_byte  (data_byte),
         .word_reg   (word_reg),

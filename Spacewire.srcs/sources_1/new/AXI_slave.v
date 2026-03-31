@@ -31,7 +31,7 @@ module axi_slave (
 
     
     output reg         TREADY,
-    output reg  [7:0]  fifo_din,
+    output reg  [8:0]  fifo_din,
     output reg         wr_en
 );
 

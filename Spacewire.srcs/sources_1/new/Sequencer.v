@@ -3,7 +3,6 @@ module Sequencer(
     input rst,
     input serial_busy,
 
-    input SEND_FCT,
     input SEND_BC,
 
     input tx_allowed,
@@ -57,17 +56,21 @@ module Sequencer(
     // ---------------------------------------
     always @(posedge clk) begin
         if (rst) 
-            BC_pending  <= 0;
-        
-        else if (SEND_BC)
-                BC_pending <= 1;
+            BC_pending  <= 1'b0;
+        else begin
+            if (SEND_BC)
+                    BC_pending <= 1'b1;
+                    
+            else if (state == S_BC_DATA)
+                BC_pending <= 1'b0;
         end
+    end
 
     // ---------------------------------------
     // MAIN FSM 
     // ---------------------------------------
     always @(*) begin
-
+        
     case (state)
 
         // -------------------------
@@ -150,7 +153,7 @@ module Sequencer(
 
         // -------------------------
         default: begin
-            next_state = S_NULL_ESC;
+            next_state = S_NULL_FCT;
         end
 
     endcase
@@ -163,13 +166,18 @@ module Sequencer(
     always @(posedge clk) begin
         if (rst) begin
             state <= S_NULL_ESC;
-            next_state <= S_NULL_FCT;
-            state_req <= 0;
-            load <= 0;
+            state_req <= 1'b0;
             end
-        else if(state_req && serial_busy)
+            
+        else if(state_req && serial_busy) begin
             state <= next_state; 
-            state_req <= 0;  
+            state_req <= 1'b0;  
+        end
+        
+        else if(!serial_busy) begin
+            state_req <= 1'b1;  
+        end
+        
     end
     
     // ---------------------------------------
@@ -184,8 +192,8 @@ module Sequencer(
             FCT_sent_next <= 1'b0;
             data_sent_next <= 1'b0;        
             rd_en   <= 1'b0;
-            state_req <= 1'b0;
             eop_pending <= 1'b0;
+            load <= 1'b0;
         end
         else begin
             data_sent <= 1'b0;
@@ -198,7 +206,6 @@ module Sequencer(
             if (!serial_busy) begin
                 
                 load <= 1'b1;
-                state_req <= 1'b1;
                 case (state)
 
                 // -------------------------
@@ -243,7 +250,6 @@ module Sequencer(
                   S_BC_DATA: begin
                       char_type <= DATA;
                       data_byte <= broadcast_code;
-                      BC_pending <= 0;
                   end
                   
                 endcase
